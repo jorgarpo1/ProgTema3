@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ---
 title: "GraficoTema3"
 author: "Jorge García"
