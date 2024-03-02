@@ -1,6 +1,6 @@
 ---
 title: "GraficoTema3"
-author: "Jorge García"
+author: "Jorge García, Belén Gallego, Sergio Taengua y Mar Alemany "
 date: "2024-02-28"
 output: html_document
 ---
@@ -21,4 +21,11 @@ library(ggplot2)
 
 ```{r}
 #Prueba 2
-````
+```
+
+#Importamos el dataset
+```{r}
+ds <- read.csv("owid-covid-data.csv", header = TRUE)
+View(ds)
+```
+
