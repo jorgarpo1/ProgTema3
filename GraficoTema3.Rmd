@@ -38,12 +38,12 @@ united_kingdom <-  which(covid_data$location == "United Kingdom") #SACAMOS REGIS
 paises <- c(canada, france, germany, italy, japan, spain, united_kingdom, united_states)
 # Agrupamos todos los indices en un solo vector para poder sacarlos todos los registros que nos interesan
 
-covid_data_ref <- covid_data[paises, c(3,4,15)] 
-
+covid_data_ref <- covid_data[paises, c(3,4,16)] 
+#Nuevo dataframe con filas y columnas de interés
 ```
 
 
 ```{r}
-
+ggplot(data = covid_data_ref, aes(x = date, y = new_deaths_smoothed_per_million, color = location)) + geom_line()
 ```
 
