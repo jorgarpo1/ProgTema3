@@ -17,8 +17,12 @@ if (!require("pacman")) install.packages("pacman")
 
 ```{r}
 library(ggplot2)
+library(readr)
 ```
 
+
 ```{r}
-#Prueba 2
+covid_data <- read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv", 
+     col_types = cols(total_deaths_per_million = col_double()), 
+     na = "0")
 ````
