@@ -18,11 +18,32 @@ if (!require("pacman")) install.packages("pacman")
 ```{r}
 library(ggplot2)
 library(readr)
+library(tinytex)
 ```
 
 
 ```{r}
-covid_data <- read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv", 
-     col_types = cols(total_deaths_per_million = col_double()), 
-     na = "0")
-````
+covid_data <- read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
+spec(covid_data) # IMPORTAMOS CSV
+
+spain <- which(covid_data$location == "Spain") #SACAMOS REGISTROS DE SPAIN
+united_states <- which(covid_data$location == "United States") #SACAMOS REGISTROS DE USA
+italy <- which(covid_data$location == "Italy") #SACAMOS REGISTROS DE ITALY
+france <- which(covid_data$location == "France") #SACAMOS REGISTROS DE FRANCE
+germany <- which(covid_data$location == "Germany") #SACAMOS REGISTROS DE GERMANY
+japan <- which(covid_data$location == "Japan") #SACAMOS REGISTROS DE JAPAN
+canada <- which(covid_data$location == "Canada") #SACAMOS REGISTROS DE CANADA
+united_kingdom <-  which(covid_data$location == "United Kingdom") #SACAMOS REGISTROS DE UK
+
+paises <- c(canada, france, germany, italy, japan, spain, united_kingdom, united_states)
+# Agrupamos todos los indices en un solo vector para poder sacarlos todos los registros que nos interesan
+
+covid_data_ref <- covid_data[paises, c(3,4,15)] 
+
+```
+
+
+```{r}
+
+```
+
