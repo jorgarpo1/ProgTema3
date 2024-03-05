@@ -63,6 +63,5 @@ covid <- ggplot(data = covid_data_ref, aes(x = date, y = new_deaths_per_million/
        testing and challenges in the atribution of the cause of death",
        x = "Years", y = "New deaths per million") + 
   scale_color_manual(values = colores)
-covid
 ggplotly(covid)
 ```
