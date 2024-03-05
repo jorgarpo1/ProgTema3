@@ -44,6 +44,10 @@ covid_data_ref <- covid_data[paises, c(3,4,16)]
 
 
 ```{r}
-ggplot(data = covid_data_ref, aes(x = date, y = new_deaths_smoothed_per_million, color = location)) + geom_line()
+colores <- c("Canada" = "brown", "France" = "orange", "Germany" = "green", "Italy" = "cyan", "Japan" = "blue", "Spain" = "red", "United Kingdom" = "pink", "United States" = "purple")
+
+tamanyos <- c("Canada" = 1, "France" = 1, "Germany" = 1, "Italy" = 1, "Japan" = 1, "Spain" = 1, "United Kingdom" = 1, "United States" = 1)
+
+ggplot(data = covid_data_ref, aes(x = date, y = new_deaths_smoothed_per_million, color = location)) + geom_line(aes(linewidth = location)) + scale_color_manual(values = colores) + scale_discrete_manual("linewidth", values = c(0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5, 0.5))
 ```
 
