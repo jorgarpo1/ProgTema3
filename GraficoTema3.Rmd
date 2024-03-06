@@ -21,7 +21,6 @@ library(readr)
 library(tinytex)
 library(dplyr)
 library(plotly)
-library(htmlwidgets)
 ```
 
 
@@ -54,15 +53,19 @@ covid_data_ref_spain <- covid_data[spain, c(3,4,15)] %>%
 
 
 ```{r}
-colores <- c("Canada" = "brown", "France" = "orange", "Germany" = "green", "Italy" = "cyan", "Japan" = "blue", "Spain" = "red", "United Kingdom" = "pink", "United States" = "purple")
+colores <- c("Canada" = "brown", "France" = "orange", "Germany" = "lightgreen", "Italy" = "yellow", "Japan" = "lightblue", "Spain" = "red", "United Kingdom" = "grey", "United States" = "pink")
 
-grafico <- ggplot(data = covid_data_ref, aes(x = date, y = new_deaths_per_million/7, color = location)) + geom_line(aes(linewidth = location)) + scale_color_manual(values = colores) + scale_discrete_manual("linewidth", values = c(0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5, 0.5)) + theme_bw() + theme(panel.grid = element_blank()) + geom_hline(yintercept = c(0,5,10,15,20), linetype = "dashed", color = "grey") + theme(plot.caption = element_text(hjust = 0)) + labs(title = "Grupo F: Daily new confirmed COVID-19 deaths per million people", subtitle = "For some countries the number of confirmed deaths is much lower than the true number of deaths.", caption = "Source: Johns Hopkins University CSSE COVID-19 Data")+ theme(plot.title = element_text(size = 10), plot.subtitle = element_text(size = 8), plot.caption = element_text(size = 6)) + theme(legend.title = element_blank(), axis.text.x = element_text(angle = 0, hjust = 0.5)) + scale_x_date(date_breaks = "6 months", date_labels = "%b %Y") + theme(axis.text.x = element_text(size = 4))
+grafico <- ggplot(data = covid_data_ref, aes(x = date, y = new_deaths_per_million/7, color = location)) + geom_line(aes(linewidth = location)) + scale_color_manual(values = colores) + scale_discrete_manual("linewidth", values = c(0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5, 0.5)) + theme_bw() + theme(panel.grid = element_blank()) + geom_hline(yintercept = c(0,5,10,15,20), linetype = "dashed", color = "grey", size = 0.2) + theme(plot.caption = element_text(hjust = 0)) + labs(x = NULL, y = NULL, title = "Grupo F: Daily new confirmed COVID-19 deaths per million people", subtitle = "For some countries the number of confirmed deaths is much lower than the true number of deaths.", caption = "Source: Johns Hopkins University CSSE COVID-19 Data")+ theme(plot.title = element_text(size = 10), plot.subtitle = element_text(size = 8), plot.caption = element_text(size = 6)) + theme(legend.title = element_blank(), axis.text.x = element_text(angle = 0, hjust = 0.5)) + scale_x_date(date_breaks = "6 months", date_labels = "%b %Y") + theme(axis.text.x = element_text(size = 6))
 
 grafico_interactivo <- ggplotly(grafico)
 
 grafico_interactivo <- grafico_interactivo %>% layout(title = list(text = paste0("Grupo F: Daily new confirmed COVID-19 deaths per million people", "<br>", "<sup>", "For some countries the number of confirmed deaths is much lower than the true number of deaths."), x = 0), margin = list(t = 50))
 
-grafico_interactivo <- grafico_interactivo %>% layout(source = list(text = "Source: <a href='^1^'>Johns Hopkins University CSSE COVID-19 Data</a>", x = 0, y = -0.1))
+grafico_interactivo <- grafico_interactivo %>% layout(annotations = list(x = 0, y = -0.1, text = "Source: Johns Hopkins University CSSE COVID-19 Data", xref = 'paper', yref = 'paper', showarrow = F, xanchor = 'left', yanchor = 'auto', font = list(size = 10, color = "black")))
+
+#xref = 'paper' y yref = 'paper' indican que las coordenadas de la anotación se refieren a la distancia desde el borde izquierdo e inferior del área de trazado, en unidades normalizadas donde 0 es el borde
+#showarrow = F significa que no se muestra ninguna flecha que apunte a la anotación
+#xanchor = 'left' y yanchor = 'auto' determinan la alineación horizontal y vertical del texto dentro de la caja de la anotación
 
 print(grafico_interactivo)
 
