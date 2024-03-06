@@ -57,9 +57,9 @@ covid_data_ref_spain <- covid_data[spain, c(3,4,15)] %>%
 
 
 ```{r}
-colores <- c("Canada" = "#e68787", "France" =#d49012ge", "Germany" = #1be41bn",
-             "Italy" = "cyan", "Japan" = "#7070a9", "Spain" = "red",
-             "United Kingdom" = "#efe6e8", "United States" #bab9bbple")
+colores <- c("Canada" = "orange", "France" = "green", "Germany" = "yellow",
+             "Italy" = "cyan", "Japan" = "pink", "Spain" = "red",
+             "United Kingdom" = "purple", "United States" = "grey")
 
 grafico <- ggplot(data = covid_data_ref, aes(x = date, 
                               y = new_deaths_per_million/7, color = location)) +
