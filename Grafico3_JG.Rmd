@@ -62,7 +62,7 @@ covid <- ggplot(data = covid_data_ref, aes(x = date, y = new_deaths_per_million/
        subtitle = "For some countried the number pof confirmed deaths is much 
        lower than the true number of deaths, This is because of the limited 
        testing and challenges in the atribution of the cause of death",
-       x = "Years", y = "New deaths per million") + 
+       x = "Years", y = "New deaths per million") 
   scale_color_manual(values = colores)
 ggplotly(covid)
 ```
