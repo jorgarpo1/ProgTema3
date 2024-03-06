@@ -52,15 +52,16 @@ covid_data_ref_spain <- covid_data[spain, c(3,4,15)] %>% subset( new_deaths_per_
 ```{r}
 colores <- c("Canada" = "brown", "France" = "orange", "Germany" = "green", "Italy" = "cyan", "Japan" = "blue", "Spain" = "red", "United Kingdom" = "pink", "United States" = "purple")
 
-grafico <- ggplot(data = covid_data_ref, aes(x = date, y = new_deaths_per_million/7, color = location)) + geom_line(aes(linewidth = location)) + scale_color_manual(values = colores) + scale_discrete_manual("linewidth", values = c(0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5, 0.5)) + theme_bw() + theme(panel.grid = element_blank()) + geom_hline(yintercept = c(0,5,10,15,20), linetype = "dashed", color = "grey") + theme(plot.caption = element_text(hjust = 0)) + labs(title = "Grupo F: Daily new confirmed COVID-19 deaths per million people", subtitle = "For some countries the number of confirmed deaths is much lower than the true number of deaths.", caption = "Source: Johns Hopkins")
+grafico <- ggplot(data = covid_data_ref, aes(x = date, y = new_deaths_per_million/7, color = location)) + geom_line(aes(linewidth = location)) + scale_color_manual(values = colores) + scale_discrete_manual("linewidth", values = c(0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5, 0.5)) + theme_bw() + theme(panel.grid = element_blank()) + geom_hline(yintercept = c(0,5,10,15,20), linetype = "dashed", color = "grey") + theme(plot.caption = element_text(hjust = 0)) + labs(title = "Grupo F: Daily new confirmed COVID-19 deaths per million people", subtitle = "For some countries the number of confirmed deaths is much lower than the true number of deaths.", caption = "Source: Johns Hopkins University CSSE COVID-19 Data", )
 
 grafico_interactivo <- ggplotly(grafico)
 
 grafico_interactivo <- grafico_interactivo %>% layout(title = list(text = paste0("Grupo F: Daily new confirmed COVID-19 deaths per million people", "<br>", "<sup>", "For some countries the number of confirmed deaths is much lower than the true number of deaths."), x = 0), margin = list(t = 50))
 
+grafico_interactivo <- grafico_interactivo %>% layout(source = list(text = "Source: <a href='^1^'>Johns Hopkins University CSSE COVID-19 Data</a>", x = 0, y = -0.1))
+
 print(grafico_interactivo)
 
-saveWidget(grafico_interactivo, file = "GraficoTema3.html", selfcontained = TRUE)
 ggsave("GraficoTema3.pdf", grafico, device = "pdf")
 ```
 
