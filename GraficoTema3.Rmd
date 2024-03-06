@@ -20,6 +20,8 @@ library(ggplot2)
 library(readr)
 library(tinytex)
 library(dplyr)
+library(plotly)
+library(htmlwidgets)
 ```
 
 
@@ -50,8 +52,14 @@ covid_data_ref_spain <- covid_data[spain, c(3,4,15)] %>% subset( new_deaths_per_
 ```{r}
 colores <- c("Canada" = "brown", "France" = "orange", "Germany" = "green", "Italy" = "cyan", "Japan" = "blue", "Spain" = "red", "United Kingdom" = "pink", "United States" = "purple")
 
-tamanyos <- c("Canada" = 1, "France" = 1, "Germany" = 1, "Italy" = 1, "Japan" = 1, "Spain" = 1, "United Kingdom" = 1, "United States" = 1)
+grafico <- ggplot(data = covid_data_ref, aes(x = date, y = new_deaths_per_million/7, color = location)) + geom_line(aes(linewidth = location)) + scale_color_manual(values = colores) + scale_discrete_manual("linewidth", values = c(0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5, 0.5)) + theme_bw() + theme(panel.grid = element_blank()) + geom_hline(yintercept = c(0,5,10,15,20), linetype = "dashed", color = "grey") + theme(plot.caption = element_text(hjust = 0))
 
-ggplot(data = covid_data_ref, aes(x = date, y = new_deaths_per_million, color = location)) + geom_line(aes(linewidth = location)) + scale_color_manual(values = colores) + scale_discrete_manual("linewidth", values = c(0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5, 0.5)) + theme_bw() + theme(panel.grid = element_blank()) + geom_hline(yintercept = c(0,5,10,15,20), linetype = "dashed", color = "grey") + labs(title = "Daily new confirmed COVID-19 deaths per million people", subtitle = "For some countries the number of confirmed deaths is much lower than the true number of deaths.", caption = "Source: Johns Hopkins University CSSE COVID-19 Data") + theme(plot.caption = element_text(hjust = 0))
+grafico_interactivo <- ggplotly(grafico)
+
+grafico_interactivo <- grafico_interactivo %>% layout(title = list(text = paste0("Grupo F: Daily new confirmed COVID-19 deaths per million people", "<br>", "<sup>", "For some countries the number of confirmed deaths is much lower than the true number of deaths."), x = 0), margin = list(t = 50))
+
+print(grafico_interactivo)
+
+saveWidget(grafico_interactivo, file = "GraficoTema3.html", selfcontained = TRUE)
 ```
 
