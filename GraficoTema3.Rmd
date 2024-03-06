@@ -77,6 +77,6 @@ grafico_interactivo <- grafico_interactivo %>%
 
 print(grafico_interactivo)
 
-saveWidget(grafico_interactivo, file ="GraficoTema3.html", selfcontained = TRUE)
+saveWidget(grafico_interactivo, file ="GraficoTema3.html", selfcontained = TRUE)#Guardar figura
 ```
 
