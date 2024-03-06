@@ -22,6 +22,9 @@ library(tinytex)
 library(dplyr)
 library(plotly)
 library(htmlwidgets)
+library(dplyr)
+library(plotly)
+library(htmlwidgets)
 ```
 
 
@@ -30,36 +33,48 @@ covid_data <- read_csv("https://covid.ourworldindata.org/data/owid-covid-data.cs
 spec(covid_data) # IMPORTAMOS CSV
 
 spain <- which(covid_data$location == "Spain") #SACAMOS REGISTROS DE SPAIN
-united_states <- which(covid_data$location == "United States") #SACAMOS REGISTROS DE USA
-italy <- which(covid_data$location == "Italy") #SACAMOS REGISTROS DE ITALY
-france <- which(covid_data$location == "France") #SACAMOS REGISTROS DE FRANCE
-germany <- which(covid_data$location == "Germany") #SACAMOS REGISTROS DE GERMANY
-japan <- which(covid_data$location == "Japan") #SACAMOS REGISTROS DE JAPAN
-canada <- which(covid_data$location == "Canada") #SACAMOS REGISTROS DE CANADA
-united_kingdom <-  which(covid_data$location == "United Kingdom") #SACAMOS REGISTROS DE UK
+united_states <- which(covid_data$location == "United States") #... USA
+italy <- which(covid_data$location == "Italy") #... ITALY
+france <- which(covid_data$location == "France") #... FRANCE
+germany <- which(covid_data$location == "Germany") #... GERMANY
+japan <- which(covid_data$location == "Japan") #... JAPAN
+canada <- which(covid_data$location == "Canada") #... CANADA
+united_kingdom <-  which(covid_data$location == "United Kingdom") #... UK
 
-paises <- c(canada, france, germany, italy, japan, spain, united_kingdom, united_states)
-# Agrupamos todos los indices en un solo vector para poder sacarlos todos los registros que nos interesan
+paises <- c(canada, france, germany, italy, japan, spain, united_kingdom,
+            united_states)
+# Agrupamos todos los indices en un solo vector para poder sacarlos todos los 
+#registros que nos interesan
 
 covid_data_ref <- covid_data[paises, c(3,4,15)] %>% subset( new_deaths_per_million > 0 )
-#Recoge del data frame los valores que son mayores que 0 para que las lineas no desciendan directamente si no hay registros o el contel es 0.
+#Recoge del data frame los valores que son mayores que 0 para que las lineas no 
+#desciendan directamente si no hay registros o el contel es 0.
 
 #Nuevo dataframe con filas y columnas de interés
-covid_data_ref_spain <- covid_data[spain, c(3,4,15)] %>% subset( new_deaths_per_million > 0 )
+covid_data_ref_spain <- covid_data[spain, c(3,4,15)] %>% 
+  subset( new_deaths_per_million > 0 )
 ```
 
 
 ```{r}
 colores <- c("Canada" = "brown", "France" = "orange", "Germany" = "green", "Italy" = "cyan", "Japan" = "blue", "Spain" = "red", "United Kingdom" = "pink", "United States" = "purple")
 
-grafico <- ggplot(data = covid_data_ref, aes(x = date, y = new_deaths_per_million/7, color = location)) + geom_line(aes(linewidth = location)) + scale_color_manual(values = colores) + scale_discrete_manual("linewidth", values = c(0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5, 0.5)) + theme_bw() + theme(panel.grid = element_blank()) + geom_hline(yintercept = c(0,5,10,15,20), linetype = "dashed", color = "grey") + theme(plot.caption = element_text(hjust = 0))
+grafico <- ggplot(data = covid_data_ref, aes(x = date, 
+                              y = new_deaths_per_million/7, color = location)) +
+  geom_line(aes(linewidth = location)) + scale_color_manual(values = colores) +
+  scale_discrete_manual("linewidth", values = c(0.5, 0.5, 0.5, 0.5, 0.5, 1, 0.5
+                                                , 0.5)) + 
+  theme_bw() + theme(panel.grid = element_blank()) + 
+  geom_hline(yintercept = c(0,5,10,15,20),linetype = "dashed", color = "grey") + 
+  theme(plot.caption = element_text(hjust = 0))
 
 grafico_interactivo <- ggplotly(grafico)
 
-grafico_interactivo <- grafico_interactivo %>% layout(title = list(text = paste0("Grupo F: Daily new confirmed COVID-19 deaths per million people", "<br>", "<sup>", "For some countries the number of confirmed deaths is much lower than the true number of deaths."), x = 0), margin = list(t = 50))
+grafico_interactivo <- grafico_interactivo %>% 
+  layout(title = list(text = paste0("Grupo F: Daily new confirmed COVID-19 deaths per million people", "<br>", "<sup>", "For some countries the number of confirmed deaths is much lower than the true number of deaths."), x = 0), margin = list(t = 50))
 
 print(grafico_interactivo)
 
-saveWidget(grafico_interactivo, file = "GraficoTema3.html", selfcontained = TRUE)
+saveWidget(grafico_interactivo, file ="GraficoTema3.html", selfcontained = TRUE)
 ```
 
